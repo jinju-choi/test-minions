@@ -16,7 +16,7 @@ export default function App(){
   return (
     <>
       <Reset />
-      <ScrollToTop />
+      <ScrollToTop/>
       
       <Router>
         {/* main */}

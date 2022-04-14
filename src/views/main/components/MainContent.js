@@ -1,22 +1,21 @@
 //react
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from 'react-router-dom';
 
-import MainList from "./MainList";
-import MainTab from "./MainTab";
-import MainSlide from "./MainSlide";
+import MainList from './MainList';
+import MainSlide from './MainSlide';
+import Tab from './Tab';
 
 //css
-import styled from "styled-components"
-
+import styled from 'styled-components';
 
 export default function MainContent() {
-  return (
+    return (
         <Container>
-          <MainSlide/>
-          <MainTab/>
-          <MainList/>
+            <MainSlide />
+            <MainList />
+            <Tab />
         </Container>
-  );
+    );
 }
 
 const Container = styled.div`

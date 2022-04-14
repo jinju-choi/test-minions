@@ -15,4 +15,4 @@ const Mh = (size) => {
   return `calc(100vh * (${size}/926))`
 }
 
-export {T, M,Mh};
+export {T, M, Mh};
