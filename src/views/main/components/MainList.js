@@ -57,6 +57,8 @@ export default function MainList() {
     const tab = ['피규어', '굿즈', '패션', '잡화', '리빙'];
     // const tabList = tab.map((tabs, index) => <li key={index}>{tabs}</li>);
 
+    const [tabIndex, setTabIndex] = useState(1);
+
     return (
         <>
             {/* <Tab>{tabList}</Tab> */}
@@ -64,30 +66,37 @@ export default function MainList() {
                 {
                     tab.map((item, index) => {
                         return (
-                            <li key={index}>{item}</li>
+                            <li key={index} active={tabIndex === {index} +1} onClick={()=>{setTabIndex({index} +1)}}>{item}</li>
                         )
                     })
                 }
             </Tab>
-            <Ul>
-                {ProList.map((el, index) => {
-                    return (
-                        <Li
-                            key={index}
-                            onClick={() => {
-                                PrdDetailPage();
-                            }}
-                        >
-                            <ImgWrap>
-                                <img src={el.img} alt={el.title} />
-                            </ImgWrap>
-                            <Title>{el.title}</Title>
-                            <Price>{el.price}원</Price>
-                            <p>미니언즈 캐릭터 {el.title} 피규어 입니다</p>
-                        </Li>
-                    );
-                })}
-            </Ul>
+
+            <ContentWrap>
+                <PrdList>
+                    {ProList.map((el, index) => {
+                        return (
+                            <Li
+                                key={index}
+                                onClick={() => {
+                                    PrdDetailPage();
+                                }}
+                            >
+                                <ImgWrap>
+                                    <img src={el.img} alt={el.title} />
+                                </ImgWrap>
+                                <Title>{el.title}</Title>
+                                <Price>{el.price}원</Price>
+                                <p>미니언즈 캐릭터 {el.title} 피규어 입니다</p>
+                            </Li>
+                        );
+                    })}
+                </PrdList>
+                <Content2>
+                    <p>굿즈</p>
+                </Content2>
+            </ContentWrap>
+            
         </>
     );
 }
@@ -102,7 +111,6 @@ const Tab = styled.ul`
     & li {
         width: 100px;
         padding: 10px 20px;
-        background: #ffed3f;
         border-radius: 8px 8px 0 0;
         text-align: center;
         font-weight: bold;
@@ -114,10 +122,29 @@ const Tab = styled.ul`
         &:hover {
             background: #f7d508;
         }
+
+        ${({active}) => {
+            return active ?
+            `background: #f7d508;`
+            :
+            `background: #ffed3f`
+        }}
     }
 `;
 
-const Ul = styled.ul`
+const ContentWrap = styled.div`
+    display: block;
+`;
+
+const Content2 = styled.div`
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: yellowgreen;
+`;
+
+const PrdList = styled.ul`
     width: 100%;
     display: flex;
     align-items: flex-start;
