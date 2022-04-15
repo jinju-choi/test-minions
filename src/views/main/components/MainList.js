@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { useHistory} from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 // css
 import styled from 'styled-components';
@@ -54,49 +54,68 @@ export default function MainList() {
         return history.push('/product/ProductDetailPage');
     };
 
-    const tab = ['피규어', '굿즈', '패션', '잡화', '리빙'];
+    const tabData = ['피규어', '굿즈', '패션', '잡화', '리빙'];
     // const tabList = tab.map((tabs, index) => <li key={index}>{tabs}</li>);
 
-    const [tabIndex, setTabIndex] = useState(1);
+    const [tabIndex, setTabIndex] = useState([0]);
+    // const [tabIdx, setTabIdx] = useState(0);
 
     return (
         <>
             {/* <Tab>{tabList}</Tab> */}
             <Tab>
-                {
-                    tab.map((item, index) => {
-                        return (
-                            <li key={index} active={tabIndex === {index} +1} onClick={()=>{setTabIndex({index} +1)}}>{item}</li>
-                        )
-                    })
-                }
+                {tabData.map((item, index) => {
+                    return (
+                        <TabLi
+                            key={index}
+                            active={tabIndex === index}
+                            onClick={() => {
+                                setTabIndex(index);
+                            }}
+                        >
+                            {item}
+                        </TabLi>
+                    );
+                })}
             </Tab>
 
             <ContentWrap>
-                <PrdList>
-                    {ProList.map((el, index) => {
-                        return (
-                            <Li
-                                key={index}
-                                onClick={() => {
-                                    PrdDetailPage();
-                                }}
-                            >
-                                <ImgWrap>
-                                    <img src={el.img} alt={el.title} />
-                                </ImgWrap>
-                                <Title>{el.title}</Title>
-                                <Price>{el.price}원</Price>
-                                <p>미니언즈 캐릭터 {el.title} 피규어 입니다</p>
-                            </Li>
-                        );
-                    })}
-                </PrdList>
-                <Content2>
+                {   tabIndex === 0 &&
+                    <PrdList>
+                        {ProList.map((el, index) => {
+                            const {img, title, price} = el;
+
+                            return (
+                                <Li
+                                    key={index}
+                                    onClick={() => {
+                                        PrdDetailPage();
+                                    }}
+                                >
+                                    <ImgWrap>
+                                        <img src={img} alt={title} />
+                                    </ImgWrap>
+                                    <Title>{title}</Title>
+                                    <Price>{price}원</Price>
+                                    <p>
+                                        미니언즈 캐릭터 {title} 피규어 입니다
+                                    </p>
+                                </Li>
+                            );
+                        })}
+                    </PrdList>
+                }
+                { tabIndex === 1 &&
+                <Content>
                     <p>굿즈</p>
-                </Content2>
+                </Content>
+                }
+                { tabIndex === 2 &&
+                <Content>
+                    <p>패션</p>
+                </Content>
+                }   
             </ContentWrap>
-            
         </>
     );
 }
@@ -107,41 +126,38 @@ const Tab = styled.ul`
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-
-    & li {
-        width: 100px;
-        padding: 10px 20px;
-        border-radius: 8px 8px 0 0;
-        text-align: center;
-        font-weight: bold;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        color: #222222;
-        transition: 0.3s;
-
-        &:hover {
-            background: #f7d508;
-        }
-
-        ${({active}) => {
-            return active ?
-            `background: #f7d508;`
-            :
-            `background: #ffed3f`
-        }}
-    }
 `;
+
+const TabLi = styled.li`
+    width: 100px;
+    padding: 10px 20px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    color: #222222;
+    transition: 0.3s;
+    /* &:hover {
+        background: red;
+    } */
+    /* background: ${props => props.active ? '#ffcc16' : '#ffed3f'}; */
+    ${({ selected }) => {
+        return selected ? `background: #ffcc16;` : `background: #ffed3f;`
+    }}
+`
 
 const ContentWrap = styled.div`
     display: block;
 `;
 
-const Content2 = styled.div`
+const Content = styled.div`
     height: 800px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: yellowgreen;
+    font-size: 50px;
 `;
 
 const PrdList = styled.ul`
@@ -168,15 +184,13 @@ const ImgWrap = styled.div`
     margin-bottom: 16px;
     overflow: hidden;
 
-    
     & img {
         width: 100%;
         height: 100%;
         object-fit: cover;
 
-        transition: all .5s;
+        transition: all 0.5s;
     }
-
 `;
 
 const Title = styled.h2`

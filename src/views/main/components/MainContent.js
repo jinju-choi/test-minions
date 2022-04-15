@@ -7,6 +7,7 @@ import Tab from './Tab';
 
 //css
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 export default function MainContent() {
     return (
