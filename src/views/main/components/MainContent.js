@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import MainList from './MainList';
 import MainSlide from './MainSlide';
 import Tab from './Tab';
+import NoticeList from './NoticeList';
 
 //css
 import styled from 'styled-components';
@@ -15,6 +16,7 @@ export default function MainContent() {
             <MainSlide />
             <MainList />
             <Tab />
+            <NoticeList />
         </Container>
     );
 }
